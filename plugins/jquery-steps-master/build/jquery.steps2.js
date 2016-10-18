@@ -681,21 +681,47 @@ function loadAsyncContent(wizard, options, state)
 function paginationClick(wizard, options, state, index)
 {
     var oldIndex = state.currentIndex;
+    
+    if(0 < index)
+   {
+    	var form = document.getElementById("formSignUp");
+    	var valueCh1 = form.ch1.checked;
+    	var valueCh2 = form.ch2.checked;
 
-var form = document.getElementById("formAgreement");
-	var valueCh1 = form.ch1.checked;
-	var valueCh2 = form.ch2.checked;
+    	if(valueCh1 != true || valueCh2 != true)
+    	{
+    		alert('You must accept the Agreement before registering.');
+    		return false;
+    	}
+    }
 
-if(valueCh1 != true || valueCh2 != true)
-{
-
-alert('You must accept the Agreement before registering.');
-return false;
-}
-
-
-    if (index >= 0 && index < state.stepCount && !(options.forceMoveForward && index < state.currentIndex))
+    if(1 < index)
     {
+    	var form = document.getElementById("formSignUp");
+    	var valueName = form.inputName.value;
+    	var valueOrganization = form.inputOrganization.value;
+    	var valuePhone = form.inputPhone.value;
+    	var errMsg = '';
+    	
+    	if (Trim(form.inputName.value) == '')
+    		errMsg += "The name field is required !!\n";
+    	
+    	if (Trim(form.inputOrganization.value) == '')
+    		errMsg += "The organization field is required !!\n";
+    	
+    	if (Trim(form.inputPhone.value) == '')
+    		errMsg += "The phone field is required !!\n";
+    	
+    	if (errMsg != '')
+    	{
+        	alert(errMsg);
+        	return false;
+        	}
+    }
+    
+ 
+    
+    if (index >= 0 && index < state.stepCount && !(options.forceMoveForward && index < state.currentIndex)){
         var anchor = getStepAnchor(wizard, index),
             parent = anchor.parent(),
             isDisabled = parent.hasClass("disabled");
@@ -703,7 +729,8 @@ return false;
         // Enable the step to make the anchor clickable!
         parent._enableAria();
         anchor.click();
-
+        parent._disableAria();
+        
         // An error occured
         if (oldIndex === state.currentIndex && isDisabled)
         {
@@ -717,6 +744,51 @@ return false;
 
     return false;
 }
+
+/************************* Sign Up Form Validation ************************/
+
+function Trim(x) {
+	return x.replace(/^\s+|\s+$/gm, '');
+}
+
+function formSubmit(formName) {
+	var form = document.getElementById(formName);
+	form.submit();
+}
+
+function checkSignUpData(formName){
+	var foorm = document.getElementById(formName);
+	var errMsg = '';
+	re = /\W/;
+
+	if (Trim(form.inputName.value) == '')
+		errMsg += "The name field is required !!\n";
+	
+	if (Trim(form.inputOrganization.value) == '')
+		errMsg += "The organization field is required !!\n";
+	
+	if (Trim(form.inputPhone.value) == '')
+		errMsg += "The phone field is required !!\n";
+
+
+	if (Trim(form.inputEmail.value) == '')
+		errMsg += "The e-mail field is required !!\n";
+	
+	if (Trim(form.inputPassword.value) == '')
+		errMsg += "The password field is required !!\n";
+	
+	if (Trim(form.inputPassword2.value) == '')
+		errMsg += "The password confirmation field is required !!\n";
+	
+	if (errMsg == '')
+	{
+		form.submit();
+		return true;
+	}
+	alert(errMsg);
+	return false;
+}
+
 
 /**
  * Fires when a pagination click happens.
@@ -1248,6 +1320,7 @@ function stepClickHandler(event)
         state = getState(wizard),
         oldIndex = state.currentIndex;
 
+    
     if (anchor.parent().is(":not(.disabled):not(.current)"))
     {
         var href = anchor.attr("href"),
@@ -1924,7 +1997,31 @@ var defaults = $.fn.steps.defaults = {
      * @default function (event, currentIndex) { }
      * @for defaults
      **/
-    onFinished: function (event, currentIndex) { alert('hi');},
+    onFinished: function (event, currentIndex) {
+
+    	var form = document.getElementById("formSignUp");
+    	var valueEmail = form.inputEmail.value;
+    	var valuePassword = form.inputPassword.value;
+    	var valuePassword2 = form.inputPassword2.value;
+    	var errMsg = '';
+    	
+    	if (Trim(form.inputEmail.value) == '')
+    		errMsg += "The e-mail field is required !!\n";
+    	
+    	if (Trim(form.inputPassword.value) == '')
+    		errMsg += "The password field is required !!\n";
+    	
+    	if (Trim(form.inputPassword2.value) == '')
+    		errMsg += "The password confirmation field is required !!\n";
+    	
+    	if (errMsg != '')
+    	{
+    	alert(errMsg);
+    	return false;
+    	}
+    	
+    	
+    	},
 
     /**
      * Contains all labels. 
