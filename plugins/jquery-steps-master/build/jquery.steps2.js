@@ -1974,6 +1974,7 @@
 				errMsg += "Please verify your E-mail account !!\n";
 
 			if (errMsg == '') {
+				form.action = 'pSignUp.jsp'
 				form.submit();
 				return true;
 			}
