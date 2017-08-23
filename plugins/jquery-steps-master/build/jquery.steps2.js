@@ -710,6 +710,7 @@
 			var valueName = form.inputName.value;
 			var valueCompany = form.inputCompany.value;
 			var valuePhone = form.inputPhone.value;
+			var valuePurpose = form.inputPurpose.value;
 			var errMsg = '';
 			
 			if (Trim(valueName) == '')
@@ -720,6 +721,10 @@
 
 			if (Trim(valuePhone) == '')
 				errMsg += "The phone field is required !!\n";
+			
+			if (Trim(valuePurpose) == '')
+				errMsg += "The purpose field is required !!\n";
+			
 
 			if (errMsg != '') {
 				alert(errMsg);
