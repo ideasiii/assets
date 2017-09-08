@@ -695,18 +695,6 @@
 
 		if (0 < index) {
 			var form = document.getElementById("formSignUp");
-			var valueCh1 = form.ch1.checked;
-			var valueCh2 = form.ch2.checked;
-
-			if (valueCh1 != true || valueCh2 != true) {
-				alert('You must accept the Agreement before registering.');
-				return false;
-			}
-		}
-
-		
-		if (1 < index) {
-			var form = document.getElementById("formSignUp");
 			var valueName = form.inputName.value;
 			var valueCompany = form.inputCompany.value;
 			var valuePhone = form.inputPhone.value;
@@ -725,6 +713,37 @@
 			if (Trim(valuePurpose) == '')
 				errMsg += "The purpose field is required !!\n";
 			
+
+			if (errMsg != '') {
+				alert(errMsg);
+				return false;
+			}
+		}
+
+		
+		if (1 < index) {
+		
+			var form = document.getElementById("formSignUp");
+			var valueEmail = form.inputEmail.value;
+			var valuePassword = form.inputPassword.value;
+			var valuePassword2 = form.inputPassword2.value;
+			var errMsg = '';
+
+			if (Trim(valueEmail) == '')
+				errMsg += "The E-mail field is required !!\n";
+
+			if (Trim(valuePassword) == '')
+				errMsg += "The password field is required !!\n";
+
+			if (Trim(valuePassword2) == '') {
+				errMsg += "The password confirmation field is required !!\n";
+			} else {
+				if (Trim(valuePassword2) != Trim(valuePassword))
+					errMsg += "The password confirmation failed !!\n";
+			}
+			
+			if (document.getElementById("btnA").style.display == "none")
+				errMsg += "Please verify your E-mail account !!\n";
 
 			if (errMsg != '') {
 				alert(errMsg);
@@ -1957,36 +1976,21 @@
 		onFinished : function(event, currentIndex) {
 
 			var form = document.getElementById("formSignUp");
-			var valueEmail = form.inputEmail.value;
-			var valuePassword = form.inputPassword.value;
-			var valuePassword2 = form.inputPassword2.value;
+			var valueCh1 = form.ch1.checked;
+			var valueCh2 = form.ch2.checked;
 			var errMsg = '';
 
-			if (Trim(valueEmail) == '')
-				errMsg += "The E-mail field is required !!\n";
-
-			if (Trim(valuePassword) == '')
-				errMsg += "The password field is required !!\n";
-
-			if (Trim(valuePassword2) == '') {
-				errMsg += "The password confirmation field is required !!\n";
-			} else {
-				if (Trim(valuePassword2) != Trim(valuePassword))
-					errMsg += "The password confirmation failed !!\n";
+			if (valueCh1 != true || valueCh2 != true) {
+				alert('You must accept the Agreement before registering.');
+				return false;
 			}
 			
-			if (document.getElementById("btnA").style.display == "none")
-				errMsg += "Please verify your E-mail account !!\n";
-
-			if (errMsg == '') {
-				form.action = 'pSignUp.jsp'
-				form.submit();
-				return true;
-			}
-			alert(errMsg);
-			return false;
-			
-			
+				if (errMsg == '') {
+					form.action = 'pSignUp.jsp'
+					form.submit();
+					return true;
+				}
+	
 		},
 		
 		
